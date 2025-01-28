@@ -7,6 +7,38 @@
     <title>Inventory System</title>
 </head>
 <body>
+<div class="sidebar">
+    <h2>Inventory System</h2>
+    <a href="#"><i class="fas fa-home"></i> Home</a>
+    <a href="#"><i class="fas fa-box"></i> Inventory</a>
+    <a href="#" id="addItemBtn"><i class="fas fa-plus"></i> Add Item</a>
+</div>
+<div class="container">
+    <h1>Manage Products</h1>
+    <div class="grid-container" id="productGrid">
+        <div id="noItemsMessage" class="grid-item" style="text-align: center;">No items available</div>
+    </div>
+</div>
+
+<div id="addItemModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Add Item</h2>
+            <span class="close" id="closeModal">&times;</span>
+        </div>
+        <div class="form-group">
+            <label for="productName">Product Name</label>
+            <input type="text" id="productName" placeholder="Enter product name">
+        </div>
+        <div class="form-group">
+            <label for="productImage">Product Image</label>
+            <input type="file" id="productImage" accept="image/*">
+        </div>
+        <div class="form-group">
+            <button id="saveItemBtn">Save Item</button>
+        </div>
+    </div>
+</div>
 
 <script src="inventoryController.js"></script>
 </body>
