@@ -17,11 +17,9 @@ document.getElementById('saveItemBtn').addEventListener('click', function () {
         alert('Please enter a product name and image.');
         return;
     }
-
     if (noItems) {
         noItems.style.display = 'none';
     }
-
     let products = JSON.parse(localStorage.getItem('products')) || [];
 
     let existingProduct = products.find(p => p.name === productName);
@@ -42,7 +40,6 @@ document.getElementById('saveItemBtn').addEventListener('click', function () {
         };
         reader.readAsDataURL(productImage);
     }
-
     localStorage.setItem('products', JSON.stringify(products));
     document.getElementById('addItemModal').style.display = 'none';
 });
