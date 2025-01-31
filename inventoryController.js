@@ -1,13 +1,10 @@
 document.addEventListener('DOMContentLoaded', loadProducts);
-
 document.getElementById('addItemBtn').addEventListener('click', function () {
     document.getElementById('addItemModal').style.display = 'flex';
 });
-
 document.getElementById('closeModal').addEventListener('click', function () {
     document.getElementById('addItemModal').style.display = 'none';
 });
-
 document.getElementById('saveItemBtn').addEventListener('click', function () {
     const productName = document.getElementById('productName').value.trim();
     const productImage = document.getElementById('productImage').files[0];
@@ -23,7 +20,6 @@ document.getElementById('saveItemBtn').addEventListener('click', function () {
     let products = JSON.parse(localStorage.getItem('products')) || [];
 
     let existingProduct = products.find(p => p.name === productName);
-
     if (existingProduct) {
         existingProduct.stock++;
     } else {
@@ -50,7 +46,6 @@ function addProductToGrid(product) {
     const existingItem = [...document.querySelectorAll('.grid-item')].find(item =>
         item.querySelector('h3') && item.querySelector('h3').textContent === product.name
     );
-
     if (existingItem) {
         const stockElement = existingItem.querySelector('.stock');
         let stock = parseInt(stockElement.textContent.split(': ')[1], 10);
@@ -74,7 +69,6 @@ function addProductToGrid(product) {
         updateAvailability(newItem, product.stock);
     }
 }
-
 function loadProducts() {
     let products = JSON.parse(localStorage.getItem('products')) || [];
     const noItems = document.getElementById('noItemsMessage');
@@ -86,7 +80,6 @@ function loadProducts() {
         products.forEach(addProductToGrid);
     }
 }
-
 function attachEventListeners(item) {
     const plusBtn = item.querySelector('.btn-plus');
     const minusBtn = item.querySelector('.btn-minus');
@@ -104,7 +97,6 @@ function attachEventListeners(item) {
             updateAvailability(item, product.stock);
         }
     });
-
     minusBtn.addEventListener('click', function () {
         let products = JSON.parse(localStorage.getItem('products')) || [];
         let product = products.find(p => p.name === productName);
@@ -115,7 +107,6 @@ function attachEventListeners(item) {
             updateAvailability(item, product.stock);
         }
     });
-
     deleteBtn.addEventListener('click', function () {
         let products = JSON.parse(localStorage.getItem('products')) || [];
         products = products.filter(p => p.name !== productName);
@@ -130,7 +121,6 @@ function attachEventListeners(item) {
         }
     });
 }
-
 function updateAvailability(item, stock) {
     const statusElement = item.querySelector('.status');
     if (stock === 0) {
