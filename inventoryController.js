@@ -5,39 +5,34 @@ document.getElementById('addItemBtn').addEventListener('click', function () {
 document.getElementById('closeModal').addEventListener('click', function () {
     document.getElementById('addItemModal').style.display = 'none';
 });
-document.getElementById('saveItemBtn').addEventListener('click', function () {
+document.getElementById('saveItemBtn').addEventListener('click', async function () {
     const productName = document.getElementById('productName').value.trim();
     const productImage = document.getElementById('productImage').files[0];
-    const noItems = document.getElementById('noItemsMessage');
 
     if (!productName || !productImage) {
         alert('Please enter a product name and image.');
         return;
     }
-    if (noItems) {
-        noItems.style.display = 'none';
-    }
-    let products = JSON.parse(localStorage.getItem('products')) || [];
 
-    let existingProduct = products.find(p => p.name === productName);
-    if (existingProduct) {
-        existingProduct.stock++;
-    } else {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            const newProduct = {
-                name: productName,
-                image: e.target.result,
-                stock: 1
-            };
-            products.push(newProduct);
-            localStorage.setItem('products', JSON.stringify(products));
-            addProductToGrid(newProduct);
+    const reader = new FileReader();
+    reader.onload = async function (e) {
+        const stock = 1;
+        const product = {
+            name: productName,
+            image: e.target.result,
+            stock
         };
-        reader.readAsDataURL(productImage);
-    }
-    localStorage.setItem('products', JSON.stringify(products));
-    document.getElementById('addItemModal').style.display = 'none';
+
+        const response = await fetch('http://localhost:3000/products', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(product)
+        });
+
+        const savedProduct = await response.json();
+        addProductToGrid(savedProduct);
+    };
+    reader.readAsDataURL(productImage);
 });
 
 function addProductToGrid(product) {
@@ -77,10 +72,11 @@ function addProductToGrid(product) {
     }
 }
 
-function loadProducts() {
-    let products = JSON.parse(localStorage.getItem('products')) || [];
-    const noItems = document.getElementById('noItemsMessage');
+async function loadProducts() {
+    const response = await fetch('http://localhost:3000/products');
+    const products = await response.json();
 
+    const noItems = document.getElementById('noItemsMessage');
     if (products.length === 0) {
         noItems.style.display = 'block';
     } else {
