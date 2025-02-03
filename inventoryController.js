@@ -68,13 +68,11 @@ function addProductToGrid(product) {
                 <button class="btn btn-delete">Remove</button>
             `;
         }
-
         productGrid.appendChild(newItem);
 
         if (!window.location.pathname.includes('guestView.html')) {
             attachEventListeners(newItem);
         }
-
         updateAvailability(newItem, product.stock);
     }
 }
@@ -138,6 +136,7 @@ function updateAvailability(item, stock) {
         statusElement.classList.add('status-out');
         statusElement.textContent = 'Out of Stock';
     } else {
+
         statusElement.classList.remove('status-out');
         statusElement.classList.add('status-in-store');
         statusElement.textContent = 'Available';
