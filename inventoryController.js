@@ -42,10 +42,10 @@ document.getElementById('saveItemBtn').addEventListener('click', function () {
 
 function addProductToGrid(product) {
     const productGrid = document.getElementById('productGrid');
-
     const existingItem = [...document.querySelectorAll('.grid-item')].find(item =>
         item.querySelector('h3') && item.querySelector('h3').textContent === product.name
     );
+
     if (existingItem) {
         const stockElement = existingItem.querySelector('.stock');
         let stock = parseInt(stockElement.textContent.split(': ')[1], 10);
@@ -60,15 +60,25 @@ function addProductToGrid(product) {
             <h3>${product.name}</h3>
             <p class="stock">Stock: ${product.stock}</p>
             <p class="status status-in-store">Available</p>
-            <button class="btn btn-plus">+</button>
-            <button class="btn btn-minus">-</button>
-            <button class="btn btn-delete">Remove</button>
         `;
+        if (!window.location.pathname.includes('guestView.html')) {
+            newItem.innerHTML += `
+                <button class="btn btn-plus">+</button>
+                <button class="btn btn-minus">-</button>
+                <button class="btn btn-delete">Remove</button>
+            `;
+        }
+
         productGrid.appendChild(newItem);
-        attachEventListeners(newItem);
+
+        if (!window.location.pathname.includes('guestView.html')) {
+            attachEventListeners(newItem);
+        }
+
         updateAvailability(newItem, product.stock);
     }
 }
+
 function loadProducts() {
     let products = JSON.parse(localStorage.getItem('products')) || [];
     const noItems = document.getElementById('noItemsMessage');

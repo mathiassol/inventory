@@ -2,9 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+  <link rel="stylesheet" href="styles.css">
+    <title>Guest View</title>
 </head>
 <body>
 
+<div class="sidebar">
+  <h2>Inventory System</h2>
+</div>
+<div class="container">
+  <h1>Manage Products</h1>
+  <div class="grid-container" id="productGrid">
+    <div id="noItemsMessage" class="grid-item" style="text-align: center;">No items available</div>
+  </div>
+</div>
+
+<div id="addItemModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Add Item</h2>
+      <span class="close" id="closeModal">&times;</span>
+    </div>
+    <div class="form-group">
+      <label for="productName">Product Name</label>
+      <input type="text" id="productName" placeholder="Enter product name">
+    </div>
+    <div class="form-group">
+      <label for="productImage">Product Image</label>
+      <input type="file" id="productImage" accept="image/*">
+    </div>
+    <div class="form-group">
+      <button id="saveItemBtn">Save Item</button>
+    </div>
+  </div>
+</div>
+
+
+<script src="inventoryController.js"></script>
 </body>
 </html>
